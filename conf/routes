@@ -7,7 +7,16 @@ module:testrunner
 # module:jobs
 
 
+
+
 GET     /                                           App.Index
+
+GET     /login                                      AuthController.Index
+POST    /AuthController/LoginForm                   AuthController.LoginForm
+GET     /App/Question                               App.Question
+
+
+
 GET     /api/users                                  UserController.GetAll
 POST    /api/users/register                         UserController.Register
 GET     /api/users/:id                              UserController.GetUserFormID

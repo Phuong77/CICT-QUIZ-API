@@ -5,6 +5,7 @@ import (
 	"cict-quiz-api/app/models"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/asaskevich/govalidator"
 	"github.com/revel/revel"
 	"go.mongodb.org/mongo-driver/bson"
@@ -18,9 +19,11 @@ type AuthController struct {
 }
 
 func (c AuthController) Index() revel.Result{
-	return revel.RenderHTMLResult{};
+	return c.Render()
+
 }
 
+//Api
 func (c AuthController) Login() revel.Result {
 	defer c.Request.Destroy()
 	login := &models.Login{}
@@ -68,3 +71,38 @@ func (c AuthController) Login() revel.Result {
 	data["data"] = body
 	return c.RenderJSON(data)
 }
+
+func  (c AuthController) LoginForm() revel.Result {
+
+	login := &models.Login{Username: c.Params.Get("username"), Password: c.Params.Get("password")}
+	//c.Response.Status = http.StatusBadRequest
+	//data := make(map[string]interface{})
+	//data["status"] = "error"
+	//if err := json.NewDecoder(c.Request.GetBody()).Decode(&login); err != nil{
+	//
+	//	return c.RenderText("Could parse request")
+	//}
+	fmt.Println(login)
+
+
+	if govalidator.IsNull(login.Username) || govalidator.IsNull(login.Password){
+		return c.RenderText("Not validate")
+	}
+
+	result := &models.User{}
+	ctx := context.Background()
+	filter := bson.D{primitive.E{Key: "username", Value: login.Username}}
+
+	if err := database.UserCollection.FindOne(ctx,filter).Decode(&result); err != nil{
+		return c.RenderText("Loi gi do")
+		//return c.Render(c.Index)
+	}
+
+	//if err := models.CheckHashAndPassword(login.Password,result.Password); err !=nil{
+	//	return c.RenderText("Loi gi do")
+	//}
+	//return c.RenderText("Login thanh cong")
+	return c.Redirect(App.Question)
+}
+
+
