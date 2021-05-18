@@ -5,6 +5,7 @@ import (
 	"cict-quiz-api/app/models"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/revel/revel"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -25,8 +26,10 @@ func (c CategoryController) GetAll() revel.Result {
 	var result = []models.Category{}
 	ctx := context.Background()
 	cur, err := database.CategoryCollection.Find(ctx, bson.D{})
+
 	c.Response.Status = http.StatusInternalServerError
 	data:= make(map[string]interface{})
+
 	if err != nil {
 		data["status"] = "error"
 		data["data"] = "Internal Server Error"
@@ -35,9 +38,10 @@ func (c CategoryController) GetAll() revel.Result {
 
 	for cur.Next(ctx){
 		var cat models.Category
-		if err:= cur.Decode(&cat); err !=nil{
+		fmt.Println(cur)
+		if err := cur.Decode(&cat); err !=nil{
 			data["status"] = "error"
-			data["data"] = "Internal Server Error"
+			data["data"] = "Internal Server Error In Next Func"
 			return c.RenderJSON(data)
 		}
 		result = append(result, cat)

@@ -13,7 +13,7 @@ GET     /                                           App.Index
 
 GET     /login                                      AuthController.Index
 POST    /AuthController/LoginForm                   AuthController.LoginForm
-GET     /App/Question                               App.Question
+GET     /home                                       QuestionController.Index
 
 
 
@@ -29,6 +29,11 @@ POST    /api/courses/insert/range                   CourseController.InsertMany
 
 GET     /api/categories                             CategoryController.GetAll
 POST    /api/categories/create                      CategoryController.Create
+
+
+
+GET     /api/question                               QuestionController.GetAll
+POST    /api/question/create                        QuestionController.Create
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

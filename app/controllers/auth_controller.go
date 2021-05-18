@@ -3,6 +3,7 @@ package controllers
 import (
 	"cict-quiz-api/app/database"
 	"cict-quiz-api/app/models"
+	"cict-quiz-api/app/routes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -94,15 +95,22 @@ func  (c AuthController) LoginForm() revel.Result {
 	filter := bson.D{primitive.E{Key: "username", Value: login.Username}}
 
 	if err := database.UserCollection.FindOne(ctx,filter).Decode(&result); err != nil{
-		return c.RenderText("Loi gi do")
+		//return c.RenderText("Loi gi do")
+		c.Flash.Error("Mật khẩu hoặc tên người dùng chưa đúng!")
+		//c.Flash.Error("Nguời dùng"+login.Username+" chưa đúng")
+		return  c.Redirect(AuthController.Index)
+		//return c.Redirect(App.Index)
 		//return c.Render(c.Index)
 	}
 
 	//if err := models.CheckHashAndPassword(login.Password,result.Password); err !=nil{
 	//	return c.RenderText("Loi gi do")
 	//}
+	//c.Flash.Error("Mật khẩu hoặc tên người dùng chưa đúng!")
+
 	//return c.RenderText("Login thanh cong")
-	return c.Redirect(App.Question)
+	return c.Redirect(routes.QuestionController.Index())
 }
+
 
 

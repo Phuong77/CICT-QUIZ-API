@@ -10,6 +10,8 @@ import (
 var UserCollection *mongo.Collection
 var CourseCollection *mongo.Collection
 var CategoryCollection *mongo.Collection
+var QuestionCollection *mongo.Collection
+
 
 var ctx = context.TODO()
 
@@ -28,5 +30,6 @@ func InitDB(uri string) error {
 	UserCollection = database.Collection("user")
 	CourseCollection = database.Collection("course")
 	CategoryCollection = database.Collection("category")
+	QuestionCollection=database.Collection("question")
 	return nil
 }
