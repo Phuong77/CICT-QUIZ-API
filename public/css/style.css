@@ -11,13 +11,15 @@ body {
 
 .img_logo {
     height: 70px;
-    margin: 50px 0 0 500px;
+    width: auto;
+}
+
+div.row {
+    display: flex;
 }
 
 #login .container #login-row #login-column #login-box {
-    margin:5% 0% 3% 77%;
     max-width: 270px;
-    height: 244px;
     border: 1px solid #080808;
     background-color: #F6F8FA;
     border-radius: 2% 2%;
@@ -27,19 +29,16 @@ body {
 ;
 }
 #login .container #login-row #login-column #login-box #login-form #register-link {
-    margin-top: -50px;
 }
 #login #hinhanh{
-    position:absolute; width:100%; height:100%
 
 }
 img.img_logo {
-    width: 50%;
-    margin: 0% 0% 0% 17%;
 }
 
 .logo_are {
-    padding: 0% 42%;
+    text-align: center;
+    margin-bottom: 20px;
 }
 a.btn.btn-info.btn-md {
     background: #101010;
@@ -58,21 +57,18 @@ div#login-box {
 }
 h1 {
     color:#000;
-    font-size: 13px;
-    width:max-content;
-    margin:6% 0% 0% 90%;
-
+    font-size: 16px;
+    margin-bottom: 20px;
 }
 
 div#helping {
     border: 1px solid;
     border-radius: 12px;
-    margin:0% 0% 20% 80%;
-    height: 40px;
-    padding: 0%;
+    padding: 5px 0;
     font-size:14px;
     color:#000;
-    width:42%;
+    margin-top: 20px;
+    width: fit-content;
 }
 #login.text-info{
     color:#000;
@@ -84,6 +80,24 @@ input[type="submit"] {
     width: 150px;
     border-radius: 6px;
     color: white;
-    margin: 4% 0% 2% 12%;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom: 25px;
 }
 input[type="submit"] {}
+
+.error-modal {
+    position: absolute;
+    right: 3rem;
+    top: 3rem;
+}
+
+#login-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}

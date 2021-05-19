@@ -10,22 +10,6 @@
         </div>
         <div id="login-row" class="row justify-content-center align-items-center">
             <div id="login-column" class="col-md-6">
-                <div class="col-md-12">
-                    {{if or .errors .flash.error}}
-                    <div class="alert alert-danger">
-                        {{if .flash.error}}
-                        {{.flash.error}}
-                        {{end}}
-                        {{if .errors}}
-                        <!--            <ul style="margin-top:6px;">-->
-                        <!--              {{range .errors}}-->
-                        <!--              <li>{{.}}</li>-->
-                        <!--              {{end}}-->
-                        <!--            </ul>-->
-                        {{end}}
-                    </div>
-                    {{end}}
-                </div>
                 <div class="text-center">
                     <h1>Sign in to course bank</h1>
                 </div>
@@ -55,5 +39,28 @@
         </div>
     </div>
 </div>
+
+
+    {{if or .errors .flash.error}}
+    <div class="alert alert-danger error-modal" id="error-modal">
+        {{if .flash.error}}
+        {{.flash.error}}
+        {{end}}
+        {{if .errors}}
+        <!--            <ul style="margin-top:6px;">-->
+        <!--              {{range .errors}}-->
+        <!--              <li>{{.}}</li>-->
+        <!--              {{end}}-->
+        <!--            </ul>-->
+        {{end}}
+    </div>
+
+    <script>
+        const modal = document.querySelector('#error-modal');
+        setTimeout(function (){
+            modal.setAttribute('hidden', 'hidden');
+        }, 3000);
+    </script>
+    {{end}}
 
 {{template "footer.html" .}}

@@ -55,16 +55,6 @@ func (c AuthController) Login() revel.Result {
 		return c.RenderJSON(data)
 	}
 
-	// create token
-	// token, errCreate := jwt.Create(username)
-	// if errCreate != nil {
-	// 	c.Response.Status = http.StatusBadRequest
-	// 	var body interface{}
-	// 	body = "t"
-	// 	message := &models.Message{Name:"err",Body:body}
-	// 	return c.RenderJSON(message)
-	// }
-
 	c.Response.Status = http.StatusOK
 	body := make(map[string]interface{})
 	body["user"] = result
@@ -76,15 +66,8 @@ func (c AuthController) Login() revel.Result {
 func  (c AuthController) LoginForm() revel.Result {
 
 	login := &models.Login{Username: c.Params.Get("username"), Password: c.Params.Get("password")}
-	//c.Response.Status = http.StatusBadRequest
-	//data := make(map[string]interface{})
-	//data["status"] = "error"
-	//if err := json.NewDecoder(c.Request.GetBody()).Decode(&login); err != nil{
-	//
-	//	return c.RenderText("Could parse request")
-	//}
-	fmt.Println(login)
 
+	fmt.Println(login)
 
 	if govalidator.IsNull(login.Username) || govalidator.IsNull(login.Password){
 		return c.RenderText("Not validate")
@@ -93,22 +76,19 @@ func  (c AuthController) LoginForm() revel.Result {
 	result := &models.User{}
 	ctx := context.Background()
 	filter := bson.D{primitive.E{Key: "username", Value: login.Username}}
-
+	filter2 := bson.D{primitive.E{Key: "password", Value: login.Password}}
 	if err := database.UserCollection.FindOne(ctx,filter).Decode(&result); err != nil{
-		//return c.RenderText("Loi gi do")
 		c.Flash.Error("Mật khẩu hoặc tên người dùng chưa đúng!")
-		//c.Flash.Error("Nguời dùng"+login.Username+" chưa đúng")
-		return  c.Redirect(AuthController.Index)
-		//return c.Redirect(App.Index)
-		//return c.Render(c.Index)
+
+		if err := database.UserCollection.FindOne(ctx,filter2).Decode(&result); err != nil{
+			c.Flash.Error("Mật khẩu hoặc tên người dùng chưa đúng!")
+			return  c.Redirect(AuthController.Index)
+
+		}
+		return c.Redirect(routes.QuestionController.Index())
 	}
 
-	//if err := models.CheckHashAndPassword(login.Password,result.Password); err !=nil{
-	//	return c.RenderText("Loi gi do")
-	//}
-	//c.Flash.Error("Mật khẩu hoặc tên người dùng chưa đúng!")
 
-	//return c.RenderText("Login thanh cong")
 	return c.Redirect(routes.QuestionController.Index())
 }
 

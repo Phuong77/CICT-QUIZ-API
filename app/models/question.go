@@ -10,6 +10,8 @@ type Question struct {
 	Answers []Answer `bson:"answers" json:"answers"`	
 	//ModuleID string	`bson:"module_id" json:"module_id"`
 	Content Content  `bson:"content" json:"content"`
+	CategoryID string `bson:"category_id" json:"category_id"`
+	Status string `bson:"status" json:"status"`
 }
 
 

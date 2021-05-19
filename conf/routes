@@ -35,6 +35,7 @@ POST    /api/categories/create                      CategoryController.Create
 GET     /api/question                               QuestionController.GetAll
 POST    /api/question/create                        QuestionController.Create
 
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

@@ -1,7 +1,39 @@
 console.log("Hello word");
 const dropdownContainer = document.getElementById('dropdown-container');
+const tableBody=document.getElementById('table-body');
 
 const url = 'http://localhost:9000/api/categories';
+
+const questionUrl="http://localhost:9000/api/question";
+
+let questions=[];
+
+function getLevel(number){
+    if (number==1)
+        return 'high';
+    else if(number==2){
+        return 'medium';
+
+    }
+    else return 'easy';
+
+}
+function getQuestionType(int){
+    if (int==1)
+        return 'text';
+    else if(int ==2)
+        return 'image';
+    else return 'voice';
+}
+
+fetch(questionUrl)
+    .then(response=>response.json())
+    .then(result=>{
+    if (result.status=="success"){
+        questions=result.data;
+        console.log(questions);
+    }
+    })
 
 fetch(url)
     .then(response => response.json())
@@ -35,10 +67,6 @@ fetch(url)
             }
         }
 
-        console.log(parents);
-        console.log(children);
-
-
         for (const parent of parents) {
             const dropDownElement = document.createElement('div');
             dropDownElement.classList.add('dropdown');
@@ -60,7 +88,24 @@ fetch(url)
                     aelement.style.cursor = 'pointer';
 
                     aelement.addEventListener('click', function () {
-                        console.log(child.name + ' click');
+                        const category_ID= child._id;
+                        tableBody.innerHTML="";
+
+                        for (const question of questions){
+                            if (question.category_id && question.category_id==category_ID) {
+                                const tr= document.createElement('tr');
+                                tr.innerHTML=`
+                                                <td>${question.question}</td>
+                                                <td>${child.name}</td>
+                                                <td>${getQuestionType(question.content.type)}</td>
+                                                <td>${getLevel(question.level)}</td>
+                                                <td>${question.status}</td>
+                                `;
+
+                                tableBody.appendChild(tr);
+                                console.log(question);
+                            }
+                        }
                     });
 
                     dropdownContentElement.appendChild(aelement);
